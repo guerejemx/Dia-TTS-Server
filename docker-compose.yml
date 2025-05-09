@@ -1,26 +1,21 @@
+version: '3.8'  # Puedes usar la versión de docker-compose que prefieras
+
 services:
   dia-tts-server:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: https://github.com/guerejemx/Dia-TTS-Server.git  # Reemplaza con el URL de tu fork en GitHub
+      dockerfile: Dockerfile  # Asegúrate de que tu Dockerfile esté en la raíz del repo o ajusta la ruta
     ports:
       - "${PORT:-8003}:${PORT:-8003}"
     volumes:
-      # Mount local directories into the container for persistent data
       - ./model_cache:/app/model_cache
       - ./reference_audio:/app/reference_audio
       - ./outputs:/app/outputs
       - ./voices:/app/voices
-      # DO NOT mount config.yaml - let the app create it inside
-
-
     restart: unless-stopped
     env_file:
-      # Load environment variables from .env file for initial config seeding
       - .env
     environment:
-      # Enable faster Hugging Face downloads inside the container
       - HF_HUB_ENABLE_HF_TRANSFER=1
-      # Pass GPU capabilities (may be needed for legacy method if uncommented)
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - NVIDIA_VISIBLE_DEVICES=all  # Si estás usando solo CPU, puedes quitar esta línea
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Puedes también eliminar esta si no es necesario
