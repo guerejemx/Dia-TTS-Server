@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   dia-tts-server:
-    image: guerejemx/dia-tts-server:latest  # Cambia esta línea con el nombre de la imagen que hayas creado en tu fork
+    image: guerejemx/dia-tts-server:v1.0.0 # Cambia esta línea con el nombre de la imagen que hayas creado en tu fork
     build:
       context: https://github.com/guerejemx/dia-tts-server.git  # Reemplaza con el URL de tu fork en GitHub
       dockerfile: Dockerfile
