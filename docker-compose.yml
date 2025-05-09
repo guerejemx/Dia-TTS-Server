@@ -1,10 +1,11 @@
-version: '3.8'  # Puedes usar la versión de docker-compose que prefieras
+version: '3.8'
 
 services:
   dia-tts-server:
+    image: guerejemx/Dia-TTS-Server:latest  # Cambia esta línea con el nombre de la imagen que hayas creado en tu fork
     build:
       context: https://github.com/guerejemx/Dia-TTS-Server.git  # Reemplaza con el URL de tu fork en GitHub
-      dockerfile: Dockerfile  # Asegúrate de que tu Dockerfile esté en la raíz del repo o ajusta la ruta
+      dockerfile: Dockerfile
     ports:
       - "${PORT:-8003}:${PORT:-8003}"
     volumes:
@@ -12,10 +13,11 @@ services:
       - ./reference_audio:/app/reference_audio
       - ./outputs:/app/outputs
       - ./voices:/app/voices
-    restart: unless-stopped
-    env_file:
-      - .env
     environment:
       - HF_HUB_ENABLE_HF_TRANSFER=1
-      - NVIDIA_VISIBLE_DEVICES=all  # Si estás usando solo CPU, puedes quitar esta línea
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility  # Puedes también eliminar esta si no es necesario
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+    deploy:
+      replicas: 1  # Número de réplicas en Swarm
+      restart_policy:
+        condition: on-failure  # Define la política de reinicio
