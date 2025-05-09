@@ -2,9 +2,9 @@ version: '3.8'
 
 services:
   dia-tts-server:
-    image: guerejemx/Dia-TTS-Server:latest  # Cambia esta línea con el nombre de la imagen que hayas creado en tu fork
+    image: guerejemx/dia-tts-server:latest  # Cambia esta línea con el nombre de la imagen que hayas creado en tu fork
     build:
-      context: https://github.com/guerejemx/Dia-TTS-Server.git  # Reemplaza con el URL de tu fork en GitHub
+      context: https://github.com/guerejemx/dia-tts-server.git  # Reemplaza con el URL de tu fork en GitHub
       dockerfile: Dockerfile
     ports:
       - "${PORT:-8003}:${PORT:-8003}"
